@@ -1,0 +1,524 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoyaltyPoints Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6fb;
+            color: #1e293b;
+        }
+
+        header {
+            background: #172554;
+            color: white;
+            padding: 22px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        header h1 {
+            font-size: 25px;
+        }
+
+        header span {
+            color: #93c5fd;
+        }
+
+        main {
+            max-width: 1150px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .welcome {
+            margin-bottom: 25px;
+        }
+
+        .welcome h2 {
+            font-size: 27px;
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #64748b;
+        }
+
+        .search {
+            display: flex;
+            gap: 10px;
+            margin: 22px 0;
+            flex-wrap: wrap;
+        }
+
+        input, button {
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        input {
+            border: 1px solid #cbd5e1;
+            background: white;
+            flex: 1;
+            min-width: 180px;
+        }
+
+        button {
+            border: none;
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.05);
+        }
+
+        .card p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 14px;
+        }
+
+        .card h3 {
+            font-size: 27px;
+            color: #1d4ed8;
+            overflow-wrap: anywhere;
+        }
+
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.05);
+        }
+
+        .section h2 {
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .form-row input {
+            min-width: 150px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 14px 10px;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+        }
+
+        th {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        .message {
+            margin: 15px 0;
+            color: #2563eb;
+            font-size: 14px;
+            overflow-wrap: anywhere;
+        }
+
+        .links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .links a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #64748b;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 20px;
+            }
+
+            main {
+                margin-top: 25px;
+            }
+
+            .section {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>💎 Loyalty<span>Points</span></h1>
+    <p>Customer Rewards Dashboard</p>
+</header>
+
+<main>
+
+    <div class="welcome">
+        <h2>Welcome to LoyaltyPoints</h2>
+        <p>Manage your loyalty points, purchases, and rewards in one place.</p>
+    </div>
+
+    <div class="search">
+        <input type="number" id="customerId" value="1"
+               min="1" placeholder="Enter customer ID">
+        <button onclick="loadDashboard()">Load Customer</button>
+    </div>
+
+    <p id="message" class="message"></p>
+
+    <div class="cards">
+        <div class="card">
+            <p>Customer Name</p>
+            <h3 id="customerName">--</h3>
+        </div>
+
+        <div class="card">
+            <p>Available Points</p>
+            <h3 id="pointsBalance">0</h3>
+        </div>
+
+        <div class="card">
+            <p>Loyalty Tier</p>
+            <h3 id="tierName">--</h3>
+        </div>
+
+        <div class="card">
+            <p>Tier Discount</p>
+            <h3 id="discount">0%</h3>
+        </div>
+    </div>
+
+    <section class="section">
+        <h2>Customer Details</h2>
+        <p><strong>Customer ID:</strong> <span id="detailId">--</span></p>
+        <p style="margin-top: 12px;"><strong>Email:</strong>
+            <span id="customerEmail">--</span>
+        </p>
+    </section>
+
+    <section class="section">
+        <h2>Make a Purchase</h2>
+        <div class="form-row">
+            <input type="number" id="purchaseAmount"
+                   min="1" step="0.01" placeholder="Purchase amount (₹)">
+            <button onclick="makePurchase()">Process Purchase</button>
+        </div>
+        <p id="purchaseMessage" class="message"></p>
+    </section>
+
+    <section class="section">
+        <h2>Redeem Points</h2>
+        <div class="form-row">
+            <input type="number" id="redeemPoints"
+                   min="100" step="100" placeholder="Points to redeem">
+            <button onclick="redeemPoints()">Redeem Points</button>
+        </div>
+        <p id="redeemMessage" class="message"></p>
+    </section>
+
+    <section class="section">
+        <h2>Purchase History</h2>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Purchase ID</th>
+                        <th>Amount</th>
+                        <th>Discount</th>
+                        <th>Final Amount</th>
+                        <th>Points Earned</th>
+                    </tr>
+                </thead>
+                <tbody id="purchaseTable">
+                    <tr>
+                        <td colspan="5">No purchase records loaded.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Points Transaction History</h2>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Type</th>
+                        <th>Points</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody id="pointsTable">
+                    <tr>
+                        <td colspan="4">No transactions loaded.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Quick Links</h2>
+        <div class="links">
+            <a href="/api/customers" target="_blank">Customers API</a>
+            <a href="/api/tiers" target="_blank">Tiers API</a>
+            <a href="/api/purchases" target="_blank">Purchases API</a>
+            <a href="/api/points" target="_blank">Points API</a>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    LoyaltyPoints &copy; 2026 | Rewards made simple
+</footer>
+
+<script>
+    function money(value) {
+        return "₹" + Number(value || 0).toFixed(2);
+    }
+
+    async function loadDashboard() {
+        const id = document.getElementById("customerId").value;
+        const message = document.getElementById("message");
+
+        if (!id || Number(id) <= 0) {
+            message.textContent = "Please enter a valid customer ID.";
+            return;
+        }
+
+        message.textContent = "Loading customer details...";
+
+        try {
+            const response = await fetch("/api/customers/" + id);
+
+            if (!response.ok) {
+                throw new Error("Customer not found.");
+            }
+
+            const customer = await response.json();
+
+            document.getElementById("customerName").textContent =
+                customer.name || "--";
+
+            document.getElementById("pointsBalance").textContent =
+                customer.pointsBalance ?? 0;
+
+            document.getElementById("detailId").textContent =
+                customer.id;
+
+            document.getElementById("customerEmail").textContent =
+                customer.email || "--";
+
+            document.getElementById("tierName").textContent =
+                customer.tier?.name || "No tier";
+
+            document.getElementById("discount").textContent =
+                (customer.tier?.discountPercentage ?? 0) + "%";
+
+            message.textContent = "Customer details loaded successfully.";
+
+            await loadPurchases(id);
+            await loadPoints(id);
+
+        } catch (error) {
+            message.textContent = error.message;
+        }
+    }
+
+    async function loadPurchases(id) {
+        const response = await fetch(
+            "/api/purchases/customer/" + id
+        );
+
+        const data = await response.json();
+        const table = document.getElementById("purchaseTable");
+
+        table.innerHTML = "";
+
+        if (!data.length) {
+            table.innerHTML =
+                '<tr><td colspan="5">No purchases found.</td></tr>';
+            return;
+        }
+
+        data.forEach(purchase => {
+            const row = document.createElement("tr");
+
+            [
+                purchase.id,
+                money(purchase.purchaseAmount),
+                money(purchase.discountAmount),
+                money(purchase.finalAmount),
+                purchase.pointsEarned
+            ].forEach(value => {
+                const cell = document.createElement("td");
+                cell.textContent = value;
+                row.appendChild(cell);
+            });
+
+            table.appendChild(row);
+        });
+    }
+
+    async function loadPoints(id) {
+        const response = await fetch(
+            "/api/points/customer/" + id
+        );
+
+        const data = await response.json();
+        const table = document.getElementById("pointsTable");
+
+        table.innerHTML = "";
+
+        if (!data.length) {
+            table.innerHTML =
+                '<tr><td colspan="4">No transactions found.</td></tr>';
+            return;
+        }
+
+        data.forEach(transaction => {
+            const row = document.createElement("tr");
+
+            [
+                transaction.id,
+                transaction.transactionType,
+                transaction.points,
+                transaction.description || "--"
+            ].forEach(value => {
+                const cell = document.createElement("td");
+                cell.textContent = value;
+                row.appendChild(cell);
+            });
+
+            table.appendChild(row);
+        });
+    }
+
+    async function makePurchase() {
+        const id = document.getElementById("customerId").value;
+        const amount = document.getElementById("purchaseAmount").value;
+        const message = document.getElementById("purchaseMessage");
+
+        if (!id || !amount || Number(amount) <= 0) {
+            message.textContent = "Enter a valid customer ID and amount.";
+            return;
+        }
+
+        try {
+            const response = await fetch(
+                "/api/purchases/" + id + "?amount=" +
+                encodeURIComponent(amount),
+                { method: "POST" }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || "Purchase failed.");
+            }
+
+            message.textContent =
+                "Purchase completed. Points earned: " + data.pointsEarned;
+
+            await loadDashboard();
+
+        } catch (error) {
+            message.textContent = error.message;
+        }
+    }
+
+    async function redeemPoints() {
+        const id = document.getElementById("customerId").value;
+        const points = document.getElementById("redeemPoints").value;
+        const message = document.getElementById("redeemMessage");
+
+        if (!id || !points || Number(points) <= 0) {
+            message.textContent = "Enter a valid customer ID and points.";
+            return;
+        }
+
+        try {
+            const response = await fetch(
+                "/api/redemption/" + id + "?points=" +
+                encodeURIComponent(points),
+                { method: "POST" }
+            );
+
+            const data = await response.text();
+
+            if (!response.ok) {
+                throw new Error(data || "Redemption failed.");
+            }
+
+            message.textContent = data;
+
+            await loadDashboard();
+
+        } catch (error) {
+            message.textContent = error.message;
+        }
+    }
+
+    window.addEventListener("DOMContentLoaded", loadDashboard);
+</script>
+
+</body>
+</html>
