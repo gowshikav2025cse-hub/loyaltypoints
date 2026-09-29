@@ -1,3 +1,4 @@
+
 package com.loyaltypoints.loyaltypoints.config;
 
 import com.loyaltypoints.loyaltypoints.security.CustomerDetailsService;
@@ -41,12 +42,17 @@ public class SecurityConfig {
                 .requestMatchers(
                         "/login",
                         "/signup",
+                        "/access-denied",
                         "/css/**",
                         "/js/**",
                         "/images/**"
                 ).permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/admin", "/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
+        );
+
+        http.exceptionHandling(exception ->
+                exception.accessDeniedPage("/access-denied")
         );
 
         http.formLogin(form -> form

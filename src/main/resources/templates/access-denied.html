@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Denied | LoyaltyPoints</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 45px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            max-width: 450px;
+            width: 85%;
+        }
+
+        h1 {
+            color: #dc2626;
+            font-size: 30px;
+        }
+
+        p {
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        .code {
+            font-size: 60px;
+            font-weight: bold;
+            color: #dc2626;
+            margin: 10px 0;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 13px 25px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        a:hover {
+            background: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="code">403</div>
+        <h1>Access Denied</h1>
+        <p>You do not have permission to access this page.</p>
+        <p>Please log in with an authorized account to continue.</p>
+        <a th:href="@{/}">Back to Dashboard</a>
+    </div>
+</body>
+</html>

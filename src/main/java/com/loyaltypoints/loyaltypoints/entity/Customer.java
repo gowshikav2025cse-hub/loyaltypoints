@@ -3,6 +3,7 @@ package com.loyaltypoints.loyaltypoints.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "customers")
@@ -19,8 +20,8 @@ public class Customer {
     private String email;
 
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
-
     @Column(nullable = false)
     private Integer pointsBalance = 0;
 

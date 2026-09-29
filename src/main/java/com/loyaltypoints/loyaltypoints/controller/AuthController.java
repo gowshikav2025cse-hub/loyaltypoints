@@ -1,3 +1,4 @@
+
 package com.loyaltypoints.loyaltypoints.controller;
 
 import com.loyaltypoints.loyaltypoints.entity.Customer;
@@ -38,6 +39,11 @@ public class AuthController {
         return "signup";
     }
 
+    @GetMapping("/access-denied")
+    public String accessDeniedPage() {
+        return "access-denied";
+    }
+
     @PostMapping("/signup")
     public String registerCustomer(
             @RequestParam String name,
@@ -47,7 +53,10 @@ public class AuthController {
             Model model,
             RedirectAttributes redirectAttributes) {
 
-        if (name.isBlank() || email.isBlank()
+        String normalizedName = name.trim();
+        String normalizedEmail = email.trim().toLowerCase();
+
+        if (normalizedName.isBlank() || normalizedEmail.isBlank()
                 || password.isBlank() || confirmPassword.isBlank()) {
             model.addAttribute("error", "All fields are required.");
             return "signup";
@@ -64,15 +73,15 @@ public class AuthController {
             return "signup";
         }
 
-        if (customerRepository.existsByEmail(email)) {
+        if (customerRepository.existsByEmail(normalizedEmail)) {
             model.addAttribute("error",
                     "An account with this email already exists.");
             return "signup";
         }
 
         Customer customer = new Customer();
-        customer.setName(name.trim());
-        customer.setEmail(email.trim().toLowerCase());
+        customer.setName(normalizedName);
+        customer.setEmail(normalizedEmail);
         customer.setPassword(passwordEncoder.encode(password));
         customer.setPointsBalance(0);
         customer.setRole("CUSTOMER");

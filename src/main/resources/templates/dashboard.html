@@ -4,246 +4,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | LoyaltyPoints</title>
-
+    <title>Customer Dashboard | LoyaltyPoints</title>
     <meta name="_csrf" th:content="${_csrf.token}">
     <meta name="_csrf_header" th:content="${_csrf.headerName}">
 
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            background: #f3f5fb;
-            color: #172554;
-        }
-
-        header {
-            background: #172554;
-            color: white;
-            padding: 22px 6%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .brand {
-            font-size: 30px;
-            font-weight: bold;
-        }
-
-        .brand span {
-            color: #60a5fa;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .logout-btn {
-            background: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 11px 20px;
-            cursor: pointer;
-            font-size: 15px;
-        }
-
-        .container {
-            max-width: 1250px;
-            margin: 35px auto;
-            padding: 0 22px;
-        }
-
-        .welcome {
-            margin-bottom: 25px;
-        }
-
-        .welcome h1 {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-
-        .welcome p {
-            color: #64748b;
-            font-size: 17px;
-        }
-
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 22px;
-            margin-bottom: 30px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 15px;
-            padding: 28px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.04);
-        }
-
-        .card p {
-            color: #64748b;
-            margin-bottom: 16px;
-            font-size: 16px;
-        }
-
-        .card h2 {
-            color: #2563eb;
-            font-size: 30px;
-            overflow-wrap: anywhere;
-        }
-
-        .section {
-            background: white;
-            border-radius: 15px;
-            padding: 28px;
-            margin-bottom: 25px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.04);
-        }
-
-        .section h2 {
-            margin-bottom: 22px;
-            font-size: 23px;
-        }
-
-        .details p {
-            margin: 12px 0;
-            font-size: 17px;
-            overflow-wrap: anywhere;
-        }
-
-        .forms {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .form-box {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 22px;
-        }
-
-        .form-box h3 {
-            margin-bottom: 18px;
-            font-size: 20px;
-        }
-
-        input {
-            width: 100%;
-            padding: 13px;
-            margin-bottom: 15px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            font-size: 16px;
-        }
-
-        button.primary {
-            background: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 13px 20px;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: bold;
-        }
-
-        button.primary:hover {
-            background: #1d4ed8;
-        }
-
-        .table-wrapper {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 600px;
-        }
-
-        th, td {
-            padding: 16px 14px;
-            border-bottom: 1px solid #e2e8f0;
-            text-align: left;
-        }
-
-        th {
-            color: #64748b;
-            font-weight: 600;
-        }
-
-        .message {
-            padding: 14px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            display: none;
-        }
-
-        .success {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .error {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .empty {
-            color: #64748b;
-            padding: 15px 0;
-        }
-
-        footer {
-            text-align: center;
-            color: #64748b;
-            padding: 25px;
-        }
-
-        @media (max-width: 600px) {
-            header {
-                padding: 20px;
-            }
-
-            .brand {
-                font-size: 25px;
-            }
-
-            .container {
-                margin-top: 25px;
-                padding: 0 14px;
-            }
-
-            .section {
-                padding: 20px;
-            }
-
-            .welcome h1 {
-                font-size: 26px;
-            }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f3f6fc; color: #172554; }
+        header { background: linear-gradient(120deg,#172554,#1d4ed8); color: white; padding: 22px 6%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .brand { font-size: 28px; font-weight: 800; }
+        .brand span { color: #93c5fd; }
+        .header-right { display: flex; align-items: center; gap: 20px; }
+        .logout-btn, .primary { border: 0; border-radius: 9px; padding: 12px 20px; font-weight: 700; cursor: pointer; }
+        .logout-btn { background: white; color: #1d4ed8; }
+        .container { max-width: 1250px; margin: 35px auto; padding: 0 22px; }
+        .welcome { margin-bottom: 28px; }
+        .welcome h1 { font-size: 32px; margin-bottom: 10px; }
+        .welcome p { color: #64748b; line-height: 1.6; }
+        .cards { display: grid; grid-template-columns: repeat(auto-fit,minmax(210px,1fr)); gap: 20px; margin-bottom: 25px; }
+        .card { background: white; padding: 25px; border-radius: 16px; box-shadow: 0 5px 22px #0f172a0a; border: 1px solid #e7edf7; }
+        .card p { color: #64748b; font-size: 14px; margin-bottom: 15px; }
+        .card h2 { color: #1d4ed8; font-size: 28px; overflow-wrap: anywhere; }
+        .section { background: white; padding: 26px; border-radius: 16px; margin-bottom: 24px; box-shadow: 0 5px 22px #0f172a0a; border: 1px solid #e7edf7; }
+        .section h2 { font-size: 22px; margin-bottom: 22px; }
+        .details p { margin: 14px 0; color: #475569; overflow-wrap: anywhere; }
+        .forms { display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 20px; }
+        .form-box { background: #f8faff; border: 1px solid #e2e8f0; border-radius: 13px; padding: 22px; }
+        .form-box h3 { margin-bottom: 18px; font-size: 19px; }
+        input { width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #cbd5e1; border-radius: 9px; font-size: 15px; background: white; }
+        input:focus { outline: 2px solid #bfdbfe; border-color: #2563eb; }
+        .primary { background: #2563eb; color: white; width: 100%; }
+        .primary:hover { background: #1d4ed8; }
+        .table-wrapper { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th,td { padding: 15px 13px; border-bottom: 1px solid #e8edf5; text-align: left; font-size: 14px; }
+        th { background: #f8fafc; color: #64748b; font-weight: 700; }
+        tbody tr:hover { background: #f8faff; }
+        .message { padding: 14px; border-radius: 9px; margin-bottom: 20px; display: none; }
+        .success { background: #dcfce7; color: #166534; }
+        .error { background: #fee2e2; color: #991b1b; }
+        .empty { color: #64748b; padding: 20px; text-align: center; }
+        footer { text-align: center; color: #94a3b8; padding: 25px; font-size: 13px; }
+        @media(max-width:600px) {
+            header { padding: 18px; }
+            .brand { font-size: 24px; }
+            .header-right { width: 100%; justify-content: space-between; }
+            .container { margin: 24px auto; padding: 0 14px; }
+            .welcome h1 { font-size: 26px; }
+            .section { padding: 19px; }
         }
     </style>
 </head>
-
 <body>
-
 <header>
     <div class="brand">Loyalty<span>Points</span></div>
-
     <div class="header-right">
         <span>Customer Dashboard</span>
         <form th:action="@{/logout}" method="post">
@@ -253,160 +67,71 @@
 </header>
 
 <main class="container">
-
     <div class="welcome">
-        <h1>
-            Welcome,
-            <span th:text="${customer.name}">Customer</span>
-        </h1>
+        <h1>Welcome, <span th:text="${customer.name}">Customer</span></h1>
         <p>Manage your loyalty points, purchases, and rewards in one place.</p>
     </div>
 
     <div id="message" class="message"></div>
 
     <div class="cards">
-        <div class="card">
-            <p>Customer Name</p>
-            <h2 th:text="${customer.name}">Customer</h2>
-        </div>
-
-        <div class="card">
-            <p>Available Points</p>
-            <h2 id="pointsBalance"
-                th:text="${customer.pointsBalance}">0</h2>
-        </div>
-
-        <div class="card">
-            <p>Loyalty Tier</p>
-            <h2 id="tierName"
-                th:text="${customer.tier != null ? customer.tier.name : 'No Tier'}">
-                Silver
-            </h2>
-        </div>
-
-        <div class="card">
-            <p>Tier Discount</p>
-            <h2 id="tierDiscount"
-                th:text="${customer.tier != null ? customer.tier.discountPercentage + '%' : '0%'}">
-                0%
-            </h2>
-        </div>
+        <div class="card"><p>Customer Name</p><h2 th:text="${customer.name}">Customer</h2></div>
+        <div class="card"><p>Available Points</p><h2 id="pointsBalance" th:text="${customer.pointsBalance}">0</h2></div>
+        <div class="card"><p>Loyalty Tier</p><h2 id="tierName" th:text="${customer.tier != null ? customer.tier.name : 'No Tier'}">Silver</h2></div>
+        <div class="card"><p>Tier Discount</p><h2 id="tierDiscount" th:text="${customer.tier != null ? customer.tier.discountPercentage + '%' : '0%'}">0%</h2></div>
     </div>
 
     <section class="section details">
         <h2>Customer Details</h2>
-        <p>
-            <strong>Customer ID:</strong>
-            <span th:text="${customer.id}">1</span>
-        </p>
-        <p>
-            <strong>Email:</strong>
-            <span th:text="${customer.email}">customer@example.com</span>
-        </p>
+        <p><strong>Customer ID:</strong> <span th:text="${customer.id}">1</span></p>
+        <p><strong>Email:</strong> <span th:text="${customer.email}">customer@example.com</span></p>
     </section>
 
     <section class="section">
         <h2>Manage Rewards</h2>
-
         <div class="forms">
-
             <div class="form-box">
                 <h3>Make a Purchase</h3>
-
                 <form id="purchaseForm">
-                    <input type="number"
-                           id="purchaseAmount"
-                           placeholder="Purchase amount (₹)"
-                           min="0.01"
-                           step="0.01"
-                           required>
-
-                    <button class="primary" type="submit">
-                        Process Purchase
-                    </button>
+                    <input type="number" id="purchaseAmount" placeholder="Purchase amount (₹)" min="0.01" step="0.01" required>
+                    <button class="primary" type="submit">Process Purchase</button>
                 </form>
             </div>
-
             <div class="form-box">
                 <h3>Redeem Points</h3>
-
                 <form id="redeemForm">
-                    <input type="number"
-                           id="redeemPoints"
-                           placeholder="Points to redeem"
-                           min="100"
-                           step="100"
-                           required>
-
-                    <button class="primary" type="submit">
-                        Redeem Points
-                    </button>
+                    <input type="number" id="redeemPoints" placeholder="Points to redeem" min="100" step="100" required>
+                    <button class="primary" type="submit">Redeem Points</button>
                 </form>
             </div>
-
         </div>
     </section>
 
     <section class="section">
         <h2>Purchase History</h2>
-
         <div class="table-wrapper">
             <table>
-                <thead>
-                <tr>
-                    <th>Purchase ID</th>
-                    <th>Amount</th>
-                    <th>Discount</th>
-                    <th>Final Amount</th>
-                    <th>Points Earned</th>
-                </tr>
-                </thead>
-
-                <tbody id="purchaseHistory">
-                <tr>
-                    <td colspan="5" class="empty">
-                        Loading purchase history...
-                    </td>
-                </tr>
-                </tbody>
+                <thead><tr><th>Purchase ID</th><th>Amount</th><th>Discount</th><th>Final Amount</th><th>Points Earned</th></tr></thead>
+                <tbody id="purchaseHistory"><tr><td colspan="5" class="empty">Loading purchase history...</td></tr></tbody>
             </table>
         </div>
     </section>
 
     <section class="section">
         <h2>Points Transaction History</h2>
-
         <div class="table-wrapper">
             <table>
-                <thead>
-                <tr>
-                    <th>Transaction ID</th>
-                    <th>Type</th>
-                    <th>Points</th>
-                    <th>Description</th>
-                </tr>
-                </thead>
-
-                <tbody id="pointsHistory">
-                <tr>
-                    <td colspan="4" class="empty">
-                        Loading points history...
-                    </td>
-                </tr>
-                </tbody>
+                <thead><tr><th>Transaction ID</th><th>Type</th><th>Points</th><th>Description</th></tr></thead>
+                <tbody id="pointsHistory"><tr><td colspan="4" class="empty">Loading points history...</td></tr></tbody>
             </table>
         </div>
     </section>
-
 </main>
 
-<footer>
-    LoyaltyPoints Customer Rewards System
-</footer>
+<footer>LoyaltyPoints Customer Rewards System</footer>
 
 <script th:inline="javascript">
     const customerId = /*[[${customerId}]]*/ 0;
-
     const csrfToken = document.querySelector('meta[name="_csrf"]')?.content;
     const csrfHeader = document.querySelector('meta[name="_csrf_header"]')?.content;
 
@@ -427,186 +152,100 @@
 
     async function apiRequest(url, options = {}) {
         const headers = new Headers(options.headers || {});
-
-        if (csrfToken && csrfHeader && options.method &&
-            options.method.toUpperCase() !== "GET") {
+        if (csrfToken && csrfHeader && options.method && options.method.toUpperCase() !== "GET") {
             headers.set(csrfHeader, csrfToken);
         }
-
-        const response = await fetch(url, {
-            ...options,
-            headers
-        });
-
+        const response = await fetch(url, { ...options, headers });
         const text = await response.text();
-
-        if (!response.ok) {
-            throw new Error(text || "Request failed with status " + response.status);
-        }
-
+        if (!response.ok) throw new Error(text || "Request failed: " + response.status);
         return text ? JSON.parse(text) : null;
     }
 
     async function loadPurchaseHistory() {
         const tbody = document.getElementById("purchaseHistory");
-
         try {
-            const data = await apiRequest(
-                "/api/purchases/customer/" + customerId
-            );
-
+            const data = await apiRequest("/api/purchases/customer/" + customerId);
             tbody.replaceChildren();
-
             if (!Array.isArray(data) || data.length === 0) {
-                tbody.innerHTML =
-                    '<tr><td colspan="5" class="empty">No purchases found.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5" class="empty">No purchases found.</td></tr>';
                 return;
             }
-
-            data.forEach(purchase => {
+            data.forEach(p => {
                 const row = document.createElement("tr");
-
-                [
-                    purchase.id,
-                    formatMoney(purchase.purchaseAmount),
-                    formatMoney(purchase.discountAmount),
-                    formatMoney(purchase.finalAmount),
-                    purchase.pointsEarned
-                ].forEach(value => {
-                    const cell = document.createElement("td");
-                    cell.textContent = value ?? "";
-                    row.appendChild(cell);
-                });
-
+                [p.id, formatMoney(p.purchaseAmount), formatMoney(p.discountAmount), formatMoney(p.finalAmount), p.pointsEarned]
+                    .forEach(value => {
+                        const cell = document.createElement("td");
+                        cell.textContent = value ?? "";
+                        row.appendChild(cell);
+                    });
                 tbody.appendChild(row);
             });
-        } catch (error) {
-            tbody.innerHTML =
-                '<tr><td colspan="5" class="empty">Unable to load purchase history. Check the purchase history API.</td></tr>';
+        } catch {
+            tbody.innerHTML = '<tr><td colspan="5" class="empty">Unable to load purchase history.</td></tr>';
         }
     }
 
     async function loadPointsHistory() {
         const tbody = document.getElementById("pointsHistory");
-
         try {
-            const data = await apiRequest(
-                "/api/points/customer/" + customerId
-            );
-
+            const data = await apiRequest("/api/points/customer/" + customerId);
             tbody.replaceChildren();
-
             if (!Array.isArray(data) || data.length === 0) {
-                tbody.innerHTML =
-                    '<tr><td colspan="4" class="empty">No points transactions found.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="4" class="empty">No points transactions found.</td></tr>';
                 return;
             }
-
-            data.forEach(transaction => {
+            data.forEach(t => {
                 const row = document.createElement("tr");
-
-                [
-                    transaction.id,
-                    transaction.transactionType,
-                    transaction.points,
-                    transaction.description
-                ].forEach(value => {
+                [t.id, t.transactionType, t.points, t.description].forEach(value => {
                     const cell = document.createElement("td");
                     cell.textContent = value ?? "";
                     row.appendChild(cell);
                 });
-
                 tbody.appendChild(row);
             });
-        } catch (error) {
-            tbody.innerHTML =
-                '<tr><td colspan="4" class="empty">Unable to load points history. Check the points history API.</td></tr>';
+        } catch {
+            tbody.innerHTML = '<tr><td colspan="4" class="empty">Unable to load points history.</td></tr>';
         }
     }
 
-    document.getElementById("purchaseForm").addEventListener("submit",
-        async function (event) {
-            event.preventDefault();
-            hideMessage();
-
-            const amount = Number(
-                document.getElementById("purchaseAmount").value
-            );
-
-            if (!Number.isFinite(amount) || amount <= 0) {
-                showMessage("Enter a valid purchase amount.", "error");
-                return;
-            }
-
-            try {
-                const result = await apiRequest(
-                    "/api/purchases/" + customerId + "?amount=" +
-                    encodeURIComponent(amount),
-                    { method: "POST" }
-                );
-
-                showMessage(
-                    "Purchase completed successfully. Points earned: " +
-                    (result.pointsEarned ?? "See purchase history"),
-                    "success"
-                );
-
-                document.getElementById("purchaseForm").reset();
-
-                window.location.reload();
-            } catch (error) {
-                showMessage(
-                    "Purchase failed. Please check the API and try again.",
-                    "error"
-                );
-            }
+    document.getElementById("purchaseForm").addEventListener("submit", async function(event) {
+        event.preventDefault();
+        hideMessage();
+        const amount = Number(document.getElementById("purchaseAmount").value);
+        if (!Number.isFinite(amount) || amount <= 0) {
+            showMessage("Enter a valid purchase amount.", "error");
+            return;
         }
-    );
-
-    document.getElementById("redeemForm").addEventListener("submit",
-        async function (event) {
-            event.preventDefault();
-            hideMessage();
-
-            const points = Number(
-                document.getElementById("redeemPoints").value
-            );
-
-            if (!Number.isInteger(points) || points < 100 || points % 100 !== 0) {
-                showMessage(
-                    "Enter points in multiples of 100.",
-                    "error"
-                );
-                return;
-            }
-
-            try {
-                await apiRequest(
-                    "/api/redemption/" + customerId + "?points=" +
-                    encodeURIComponent(points),
-                    { method: "POST" }
-                );
-
-                showMessage(
-                    "Points redeemed successfully.",
-                    "success"
-                );
-
-                document.getElementById("redeemForm").reset();
-
-                window.location.reload();
-            } catch (error) {
-                showMessage(
-                    "Redemption failed. Check your points balance and try again.",
-                    "error"
-                );
-            }
+        try {
+            const result = await apiRequest("/api/purchases/" + customerId + "?amount=" + encodeURIComponent(amount), { method: "POST" });
+            showMessage("Purchase completed successfully. Points earned: " + (result?.pointsEarned ?? "See history"), "success");
+            this.reset();
+            window.location.reload();
+        } catch {
+            showMessage("Purchase failed. Please check the amount and try again.", "error");
         }
-    );
+    });
+
+    document.getElementById("redeemForm").addEventListener("submit", async function(event) {
+        event.preventDefault();
+        hideMessage();
+        const points = Number(document.getElementById("redeemPoints").value);
+        if (!Number.isInteger(points) || points < 100 || points % 100 !== 0) {
+            showMessage("Enter points in multiples of 100.", "error");
+            return;
+        }
+        try {
+            await apiRequest("/api/redemption/" + customerId + "?points=" + encodeURIComponent(points), { method: "POST" });
+            showMessage("Points redeemed successfully.", "success");
+            this.reset();
+            window.location.reload();
+        } catch {
+            showMessage("Redemption failed. Check your points balance and try again.", "error");
+        }
+    });
 
     loadPurchaseHistory();
     loadPointsHistory();
 </script>
-
 </body>
 </html>
